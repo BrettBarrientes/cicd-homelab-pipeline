@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        DOCKER_IMAGE = 'yourdockerhubusername/my-python-app'
+        DOCKER_IMAGE = 'bbarrientes/my-python-app'
     }
 
     stages {
