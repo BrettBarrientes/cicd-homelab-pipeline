@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        DOCKERHUB_CREDENTIALS = credentials('bbarrientes-dockerhub')
         DOCKER_IMAGE = 'bbarrientes/my-python-app'
     }
 
