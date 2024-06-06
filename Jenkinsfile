@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'docker:stable-dind'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('bbarrientes-dockerhub')
@@ -7,26 +12,34 @@ pipeline {
     }
 
     stages {
-        stage('Buildx') {
+        stage('Setup Buildx') {
             steps {
                 script {
-                    docker.buildx("${DOCKER_IMAGE}:latest")
+                    sh 'docker buildx create --use'
                 }
             }
         }
-        stage('Push') {
+        stage('Build Image') {
+            steps {
+                script {
+                    sh 'docker buildx build --platform linux/amd64,linux/arm64 -t ${DOCKER_IMAGE}:latest .'
+                }
+            }
+        }
+        stage('Push Image') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'bbarrientes-dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
-                        sh 'echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin'
-                        docker.withRegistry('https://index.docker.io/v1/') {
-                            docker.image("${DOCKER_IMAGE}:latest").push('latest')
-                        }
+                        sh '''
+                            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+                            docker buildx build --platform linux/amd64,linux/arm64 -t ${DOCKER_IMAGE}:latest --push .
+                        '''
                     }
                 }
             }
         }
     }
 }
+
 
 
