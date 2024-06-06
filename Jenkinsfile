@@ -12,14 +12,10 @@ pipeline {
     }
 
     stages {
-        stage('Setup Buildx') {
+        stage('Build Image') {
             steps {
                 script {
-                    sh '''
-                        docker buildx create mybuilder
-                        docker buildx inspect mybuilder --bootstrap
-                        docker buildx use mybuilder
-                    '''
+                    sh 'docker build -t ${DOCKER_IMAGE}:latest .'
                 }
             }
         }
