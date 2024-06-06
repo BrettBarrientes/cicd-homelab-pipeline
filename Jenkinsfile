@@ -11,14 +11,6 @@ pipeline {
         DOCKER_IMAGE = 'bbarrientes/my-python-app'
     }
 
-    stages {
-        stage('Build Image') {
-            steps {
-                script {
-                    sh 'docker build -t ${DOCKER_IMAGE}:latest .'
-                }
-            }
-        }
         stage('Build Image') {
             steps {
                 script {
