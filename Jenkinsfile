@@ -7,10 +7,10 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Buildx') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:latest")
+                    docker.buildx("${DOCKER_IMAGE}:latest")
                 }
             }
         }
