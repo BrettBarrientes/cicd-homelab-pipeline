@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        docker buildx create --name mybuilder
+                        docker buildx create mybuilder
                         docker buildx inspect mybuilder --bootstrap
                         docker buildx use mybuilder
                     '''
