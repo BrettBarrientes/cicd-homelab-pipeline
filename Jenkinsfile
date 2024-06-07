@@ -7,8 +7,8 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        DOCKER_IMAGE = 'yourdockerhubusername/my-python-app'
+        DOCKERHUB_CREDENTIALS = credentials('bbarrientes-dockerhub')
+        DOCKER_IMAGE = 'bbarrientes/my-python-app'
     }
 
     stages {
@@ -29,7 +29,7 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'bbarrientes-dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
                         sh '''
                             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
                             docker push ${DOCKER_IMAGE}:latest
