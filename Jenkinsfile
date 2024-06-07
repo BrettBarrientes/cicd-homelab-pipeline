@@ -33,7 +33,8 @@ pipeline {
                 }
             }
         }
-        stage('Push Image') {
+     }
+     stage('Push Image') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'bbarrientes-dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
@@ -44,7 +45,7 @@ pipeline {
                     }
                 }
             }
-         stage('Deploy Image') {
+      stage('Deploy Image') {
             steps {
                 script {
                     sh '''
@@ -57,4 +58,3 @@ pipeline {
             }
         }
     }
-}
