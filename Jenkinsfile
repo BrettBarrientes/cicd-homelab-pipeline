@@ -51,8 +51,12 @@ pipeline {
                             docker rm my-python-app || true
                             docker run -d --name my-python-app -p 5000:5000 bbarrientes/my-python-app:latest
                         '''
+                    } catch (Exception e) {
+                        sh 'docker logs my-python-app || true'
+                        throw e
                     }
                 }
             }
         }
     }
+}
