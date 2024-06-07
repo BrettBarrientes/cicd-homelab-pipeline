@@ -29,7 +29,12 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    sh 'docker push ${DOCKER_IMAGE}:latest'
+                    withCredentials([usernamePassword(credentialsId: 'bbarrientes-dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                        sh '''
+                            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+                            docker push ${DOCKER_IMAGE}:latest
+                        '''
+                    }
                 }
             }
         }
