@@ -2,12 +2,13 @@ pipeline {
     agent {
         docker {
             image 'docker:stable'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v ~/.docker:/root/.docker'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
     environment {
-        DOCKER_IMAGE = 'bbarrientes/my-python-app'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+        DOCKER_IMAGE = 'yourdockerhubusername/my-python-app'
     }
 
     stages {
@@ -28,7 +29,12 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    sh 'docker push ${DOCKER_IMAGE}:latest'
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                        sh '''
+                            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+                            docker push ${DOCKER_IMAGE}:latest
+                        '''
+                    }
                 }
             }
         }
@@ -51,4 +57,3 @@ pipeline {
         }
     }
 }
-
