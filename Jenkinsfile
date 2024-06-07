@@ -29,7 +29,7 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    sh 'docker push ${DOCKER_IMAGE}:latest || true'
+                    sh 'docker push ${DOCKER_IMAGE}:latest'
                 }
             }
         }
