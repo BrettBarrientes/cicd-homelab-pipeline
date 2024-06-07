@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_cloud_city():
-    return render_template('index.html')
+    return "Hello, Welcome to Cloud City!"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
