@@ -45,18 +45,19 @@ pipeline {
           stage('Deploy Image') {
                 steps {
                     script {
-                        sh '''
-                            docker pull bbarrientes/my-python-app:latest
-                            docker stop my-python-app || true
-                            docker rm my-python-app || true
-                            docker run -d --name my-python-app -p 5000:5000 bbarrientes/my-python-app:latest
-                        '''
-                    } catch (Exception e) {
-                        sh 'docker logs my-python-app || true'
-                        throw e
+                        try {
+                            sh '''
+                                docker pull bbarrientes/my-python-app:latest
+                                docker stop my-python-app || true
+                                docker rm my-python-app || true
+                                docker run -d --name my-python-app -p 5000:5000 bbarrientes/my-python-app:latest
+                            '''
+                        } catch (Exception e) {
+                            sh 'docker logs my-python-app || true'
+                            throw e
+                        }
                     }
                 }
             }
         }
     }
-}
