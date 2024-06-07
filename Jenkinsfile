@@ -14,12 +14,7 @@ pipeline {
         stage('Pull Latest Image') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'bbarrientes-dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
-                        sh '''
-                            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-                            docker pull ${DOCKER_IMAGE}:latest || true
-                        '''
-                    }
+                    sh 'docker pull ${DOCKER_IMAGE}:latest || true'
                 }
             }
         }
