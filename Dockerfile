@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Upgrade pip & install flask
-RUN pip install --upgrade 
+RUN pip install --upgrade pip
 RUN pip install flask
 
 # Install any needed packages specified in requirements.txt
