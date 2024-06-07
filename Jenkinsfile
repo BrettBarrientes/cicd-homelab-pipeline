@@ -49,7 +49,7 @@ pipeline {
                             docker pull bbarrientes/my-python-app:latest
                             docker stop my-python-app || true
                             docker rm my-python-app || true
-                            docker run -d --name my-python-app -p 50000:50000 bbarrientes/my-python-app:latest
+                            docker run -d --name my-python-app -p 5000:5000 bbarrientes/my-python-app:latest
                         '''
                     }
                 }
