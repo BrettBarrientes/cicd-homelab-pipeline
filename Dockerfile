@@ -13,11 +13,11 @@ RUN pip install --upgrade pip
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Gunicorn
-RUN pip install gunicorn
-
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Run Gunicorn when the container launches
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+# Define environment variable
+ENV NAME Cloudcity
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
