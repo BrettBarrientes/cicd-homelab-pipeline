@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 RUN pip install flask
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r /python-app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
