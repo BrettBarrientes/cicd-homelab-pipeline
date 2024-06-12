@@ -4,6 +4,9 @@ FROM python:3.9-slim
 # Set the working directory
 WORKDIR /app
 
+# Copy the requirements.txt file from the src directory
+COPY python-app/requirements.txt /app
+
 # Copy the current directory contents into the container at /app
 COPY . /app
 
