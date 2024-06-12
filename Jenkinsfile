@@ -1,4 +1,5 @@
 pipeline {
+        // put trigger here //
     agent {
         docker {
             image 'docker:stable'
