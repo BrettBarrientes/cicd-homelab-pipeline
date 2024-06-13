@@ -24,4 +24,4 @@ EXPOSE 5000
 ENV NAME Cloudcity
 
 # Run app.py when the container launches
-CMD ["python", "/python-app/app.py"]
+CMD ["python", "app.py"]
